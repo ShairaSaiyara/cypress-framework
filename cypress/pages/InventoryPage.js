@@ -9,7 +9,8 @@ class InventoryPage {
     }
 
     removeBackpackFromCart() {
-        cy.get('[data-test="remove-sauce-labs-backpack"]').click();
+        cy.get('.shopping_cart_link').click()
+        cy.get('#remove-sauce-labs-backpack').click()
     }
 
     openCart() {

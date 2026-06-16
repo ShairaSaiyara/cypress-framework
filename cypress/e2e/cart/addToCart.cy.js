@@ -19,7 +19,15 @@ describe('Add To Cart', () => {
 
         inventoryPage.addBackpackToCart();
 
-        cy.get('.shopping_cart_badge')
-            .should('contain', '1');
+        cy.get('.shopping_cart_badge').should('contain', '1');
     });
+
+    it('should update count on cart icon accurately', () => {
+        inventoryPage.addBackpackToCart();
+        inventoryPage.addBikeLightToCart();
+
+        cy.get('.shopping_cart_badge').should('contain', '2');
+    })
+
+    it()
 });
