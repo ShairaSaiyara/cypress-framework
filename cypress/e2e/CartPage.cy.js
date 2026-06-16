@@ -36,4 +36,20 @@ describe('Cart Page Tests', () => {
 
         cy.get('.shopping_cart_badge').should('not.exist');
     });
+
+    it('user can continue shopping from the cart', () => {
+        inventoryPage.addBackpackToCart();
+        inventoryPage.addBikeLightToCart();
+        inventoryPage.openCart();
+        cy.get('#continue-shopping').should('exist').click();
+        cy.url().should('include', 'https://www.saucedemo.com/inventory.html');       
+    })
+
+    it('user can checkout products from cart', () => {
+        inventoryPage.addBackpackToCart();
+        inventoryPage.addBikeLightToCart();
+        inventoryPage.openCart();
+        cy.get('.checkout_button').click();
+        cy.url().should('include', 'https://www.saucedemo.com/checkout-step-one.html');
+    })
 });
