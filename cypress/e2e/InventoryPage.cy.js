@@ -21,29 +21,29 @@ describe('Inventory Page Tests', () => {
     })
 
     it('Inventory page shows list of products', () => {
-        cy.get('.inventory_list').should('not.be.empty');
+        inventoryPage.getInventoryList().should('not.be.empty');
     })
 
     it('users can add product to cart from inventory page', () => {
         inventoryPage.addBackpackToCart();
         inventoryPage.openCart();
-        cy.get('.cart_list').should('contain', 'Sauce Labs Backpack');
+        inventoryPage.getCartList().should('contain', 'Sauce Labs Backpack');
     })
 
     it('users can remove product from cart from inventory page', () => {
         inventoryPage.addBackpackToCart();
-        cy.get('#remove-sauce-labs-backpack').click();
-        cy.get('#add-to-cart-sauce-labs-backpack').should('contain','Add to cart');
+        inventoryPage.getRemoveBackpackButton().click();
+        inventoryPage.getAddBackpackButton().should('contain','Add to cart');
     })
 
     it('clicking on product card takes user to the product profile', () => {
-        cy.get('.inventory_item_name').eq(0).should('contain','Sauce Labs Backpack').click();
+        inventoryPage.getInventoryItemNames().eq(0).should('contain','Sauce Labs Backpack').click();
         cy.url().should('include', 'https://www.saucedemo.com/inventory-item.html?id=4');
     })
 
     it('users can sort the product list by low to high price', () => {
         inventoryPage.sortBy('Price (low to high)');
-        cy.get('.inventory_item_price').then(($prices) => {
+        inventoryPage.getInventoryItemPrices().then(($prices) => {
             const actualPrices = Cypress._.map($prices, (priceElement) => {
                 return parseFloat(priceElement.innerText.replace('$', ''));
             });
@@ -54,7 +54,7 @@ describe('Inventory Page Tests', () => {
 
     it('users can sort the product list by high to low price', () => {
         inventoryPage.sortBy('Price (high to low)');
-        cy.get('.inventory_item_price').then(($prices) => {
+        inventoryPage.getInventoryItemPrices().then(($prices) => {
             const actualPrices = Cypress._.map($prices, (priceElement) => {
                 return parseFloat(priceElement.innerText.replace('$', ''));
             });

@@ -21,29 +21,29 @@ describe('Checkout Page Tests', () => {
     });
 
     it('Verify if overview tab is visible', () => {
-        cy.get('.title').should('contain', 'Checkout: Overview');
+        overviewPage.getTitle().should('contain', 'Checkout: Overview');
     })
 
     it('Verify if payment information section is present', () => {
-        cy.get('[data-test="payment-info-label"]').should('contain', 'Payment Information:');
+        overviewPage.getPaymentInfoLabel().should('contain', 'Payment Information:');
     })
 
     it('Verify if shipping information section is present', () => {
-        cy.get('[data-test="shipping-info-label"]').should('contain', 'Shipping Information:');
+        overviewPage.getShippingInfoLabel().should('contain', 'Shipping Information:');
     })
 
     it('Verify if price total section is present', () => {
-        cy.get('[data-test="total-info-label"]').should('contain', 'Price Total');
+        overviewPage.getTotalInfoLabel().should('contain', 'Price Total');
     })
 
     it('Verify if total price is calculated accurately', () => {
-        cy.get('.inventory_item_price').then(($prices) => {
+        overviewPage.getInventoryItemPrices().then(($prices) => {
             const itemPrices = Cypress._.map($prices, (priceElement) => {
             return parseFloat(priceElement.innerText.replace('$', ''));
         });
         const calculatedTotal = itemPrices.reduce((sum, price) => sum + price, 0);
 
-        cy.get('.summary_subtotal_label').then(($subtotal) => {
+        overviewPage.getSummarySubtotalLabel().then(($subtotal) => {
             const displayedTotalText = $subtotal.text();
             const displayedTotal = parseFloat(displayedTotalText.replace('Item total: $', ''));
             expect(calculatedTotal).to.equal(displayedTotal);
@@ -52,10 +52,10 @@ describe('Checkout Page Tests', () => {
     })
 
     it('Verify if tax is calculated accurately', () => {
-        cy.get('.summary_subtotal_label').then(($subtotal) => {
+        overviewPage.getSummarySubtotalLabel().then(($subtotal) => {
             const subtotal = parseFloat($subtotal.text().replace('Item total: $', ''));
             const expectedTax = parseFloat((subtotal * 0.08).toFixed(2));// .toFixed(2) to round to 2 decimal places, then parseFloat to turn it back into a number
-        cy.get('.summary_tax_label').then(($tax) => {
+        overviewPage.getSummaryTaxLabel().then(($tax) => {
             const actualTax = parseFloat($tax.text().replace('Tax: $', ''));
             expect(actualTax).to.equal(expectedTax);
         });
@@ -63,12 +63,12 @@ describe('Checkout Page Tests', () => {
     })
 
     it('Verify if total amount is displayed accurately', () => {
-        cy.get('.summary_subtotal_label').then(($subtotal) => {
+        overviewPage.getSummarySubtotalLabel().then(($subtotal) => {
             const subtotal = parseFloat($subtotal.text().replace('Item total: $', ''));
-            cy.get('.summary_tax_label').then(($tax) => {
+            overviewPage.getSummaryTaxLabel().then(($tax) => {
                 const actualTax = parseFloat($tax.text().replace('Tax: $', ''));
                 const calculatedTotal = actualTax + subtotal;
-                cy.get('.summary_total_label').then(($actualTotal) => {
+                overviewPage.getSummaryTotalLabel().then(($actualTotal) => {
                     const actualTotal = parseFloat($actualTotal.text().replace('Total: $',''));
                     expect(actualTotal).to.equal(calculatedTotal);
                 })

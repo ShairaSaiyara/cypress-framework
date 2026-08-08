@@ -25,28 +25,28 @@ describe('Checkout Page Tests', () => {
     })
 
     it('First Name is a required field', () => {
-        cy.get('[data-test="continue"]').click();
-        cy.get('.error-message-container').should('contain', 'Error: First Name is required')
+        checkoutPage.clickContinue();
+        checkoutPage.getFormErrorMessage().should('contain', 'Error: First Name is required')
     })
 
     it('Last Name is a required field', () => {
         checkoutPage.enterFirstName('test');
-        cy.get('[data-test="continue"]').click();
-        cy.get('.error-message-container').should('contain', 'Error: Last Name is required')
+        checkoutPage.clickContinue();
+        checkoutPage.getFormErrorMessage().should('contain', 'Error: Last Name is required')
     })
 
     it('Zip/Postal Code is a required field', () => {
         checkoutPage.enterFirstName('test');
         checkoutPage.enterLastName('test');
-        cy.get('[data-test="continue"]').click();
-        cy.get('.error-message-container').should('contain', 'Error: Postal Code is required')
+        checkoutPage.clickContinue();
+        checkoutPage.getFormErrorMessage().should('contain', 'Error: Postal Code is required')
     })
 
     it('User can go to the overview tab after filling all three fields', () => {
         checkoutPage.enterFirstName('test');
         checkoutPage.enterLastName('test');
         checkoutPage.enterPostalCode('1230');
-        cy.get('[data-test="continue"]').click();
+        checkoutPage.clickContinue();
         cy.url().should('include', 'https://www.saucedemo.com/checkout-step-two.html');
     })
 });

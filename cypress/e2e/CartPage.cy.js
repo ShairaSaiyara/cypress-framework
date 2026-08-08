@@ -1,10 +1,12 @@
 import LoginPage from '../pages/LoginPage';
 import InventoryPage from '../pages/InventoryPage';
+import CheckoutPage from '../pages/CheckoutPage';
 
 describe('Cart Page Tests', () => {
 
     const loginPage = LoginPage;
     const inventoryPage = new InventoryPage();
+    const checkoutPage = new CheckoutPage();
 
     beforeEach(() => {
         cy.fixture('users').then((user) => {
@@ -19,14 +21,14 @@ describe('Cart Page Tests', () => {
 
         inventoryPage.addBackpackToCart();
 
-        cy.get('.shopping_cart_badge').should('contain', '1');
+        inventoryPage.getCartBadge().should('contain', '1');
     });
 
     it('should update count on cart icon accurately', () => {
         inventoryPage.addBackpackToCart();
         inventoryPage.addBikeLightToCart();
 
-        cy.get('.shopping_cart_badge').should('contain', '2');
+        inventoryPage.getCartBadge().should('contain', '2');
     })
 
     it('should remove product from cart', () => {
@@ -34,14 +36,14 @@ describe('Cart Page Tests', () => {
         inventoryPage.addBackpackToCart();
         inventoryPage.removeBackpackFromCart();
 
-        cy.get('.shopping_cart_badge').should('not.exist');
+        inventoryPage.getCartBadge().should('not.exist');
     });
 
     it('user can continue shopping from the cart', () => {
         inventoryPage.addBackpackToCart();
         inventoryPage.addBikeLightToCart();
         inventoryPage.openCart();
-        cy.get('#continue-shopping').should('exist').click();
+        inventoryPage.clickContinueShopping();
         cy.url().should('include', 'https://www.saucedemo.com/inventory.html');       
     })
 
@@ -49,7 +51,7 @@ describe('Cart Page Tests', () => {
         inventoryPage.addBackpackToCart();
         inventoryPage.addBikeLightToCart();
         inventoryPage.openCart();
-        cy.get('.checkout_button').click();
+        checkoutPage.openCheckoutForm();
         cy.url().should('include', 'https://www.saucedemo.com/checkout-step-one.html');
     })
 });
