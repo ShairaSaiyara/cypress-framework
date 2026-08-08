@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Cypress generated artifacts
+cypress/screenshots/
+cypress/videos/
+cypress/reports/
+cypress/logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Codely CLI artifacts
+.codely/
+CODELY.md
+mem-log/
+PLUGINS_AND_SHORTCUTS.md
