@@ -33,7 +33,7 @@ class OverviewPage extends BasePage {
         this.checkoutPage.enterFirstName('test');
         this.checkoutPage.enterLastName('test');
         this.checkoutPage.enterPostalCode('1230');
-        this.clickContinue();
+        this.checkoutPage.clickContinue();
     }
 
     /**

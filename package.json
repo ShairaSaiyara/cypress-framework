@@ -6,7 +6,7 @@
     "test": "npx cypress run",
     "cypress:open": "npx cypress open",
     "clean:reports": "rimraf cypress/reports && mkdir cypress\\reports",
-    "merge:reports": "npx mochawesome-merge \"cypress/reports/mochawesome*.json\" > cypress/reports/output.json",
+    "merge:reports": "node scripts/merge-report.js",
     "generate:report": "npx marge cypress/reports/output.json --reportDir cypress/reports/html --reportFilename index.html",
     "test:report": "npm run clean:reports && npm run test && npm run merge:reports && npm run generate:report"
   },
