@@ -1,25 +1,18 @@
 // ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
+// Custom Cypress commands
 // ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+/**
+ * Waits for a loading spinner to appear and then disappear.
+ * If no spinner is present, the command resolves immediately.
+ * @param {number} timeout - Maximum time to wait in milliseconds (default: 10000).
+ */
+Cypress.Commands.add('waitForSpinnerToDisappear', (timeout = 10000) => {
+    cy.get('body').then(($body) => {
+        // Check if a spinner element exists on the page
+        if ($body.find('.loading_spinner, .spinner, .loading, #loading').length > 0) {
+            cy.get('.loading_spinner, .spinner, .loading, #loading', { timeout })
+                .should('not.be.visible');
+        }
+    });
+});

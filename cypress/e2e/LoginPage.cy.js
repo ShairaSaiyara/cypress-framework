@@ -23,7 +23,7 @@ describe('Login Tests', () => {
         )
         LoginPage.clickLogin()
 
-        cy.get('[data-test="error"]').should('contain', 'Epic sadface: Password is required')
+        LoginPage.getErrorMessage().should('contain', 'Epic sadface: Password is required')
     })
 
     it('Can not login with only password', function() {
@@ -32,9 +32,9 @@ describe('Login Tests', () => {
         )
         LoginPage.clickLogin()
 
-        cy.get('[data-test="error"]').should('contain', 'Epic sadface: Username is required')
+        LoginPage.getErrorMessage().should('contain', 'Epic sadface: Username is required')
     })
 
-    
+
 
 });
