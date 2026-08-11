@@ -17,6 +17,7 @@ Thumbs.db
 
 # Codely CLI artifacts
 .codely/
+.codely-cli/
 CODELY.md
 mem-log/
 PLUGINS_AND_SHORTCUTS.md
